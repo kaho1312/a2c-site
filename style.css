@@ -95,3 +95,22 @@ footer{border-top:1px solid var(--line);color:var(--m);padding:2rem 0;font-size:
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}.split .ch,.blur-in,.js .reveal{opacity:1!important;filter:none!important;transform:none!important}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){header,.toast{background:#fff}}
 .quote{margin:.35rem 0 0;font-size:.95rem}.quote a{font-weight:600}
+/* packages / pricing */
+.lead.sm{font-size:1.05rem;margin:-.6rem 0 2rem}
+.pkgs{align-items:stretch}
+.pkg{display:flex;flex-direction:column;background:rgba(255,255,255,.78);backdrop-filter:blur(14px) saturate(160%);-webkit-backdrop-filter:blur(14px) saturate(160%)}
+.pkg h3{margin-top:.2rem;font-size:1.3rem}
+.pkg-n{margin:0;font-size:.75rem;font-weight:800;letter-spacing:.12em;color:var(--pd)}
+.card .amt,.amt{margin:.6rem 0 0;font-size:2.3rem;font-weight:800;letter-spacing:-.035em;line-height:1.1;color:var(--t)}
+.amt .cur{font-size:.9rem;font-weight:700;color:var(--m);letter-spacing:0;vertical-align:.55em;margin-right:.1rem}
+.amt small{font-size:.9rem;font-weight:600;color:var(--m);letter-spacing:0;margin-left:.2rem}
+.setup{margin:.3rem 0 .4rem;font-size:.9rem;color:var(--m)}
+.pkg ul.chk{flex:1;margin:.6rem 0 1rem}
+.pkg-extra{font-size:.85rem;color:var(--m);margin:-.4rem 0 1rem}
+.pkg .pkg-cta{justify-content:center;margin:0;width:100%}
+.pkg.rec{border:2px solid var(--p);box-shadow:0 1px 2px rgba(15,27,42,.04),0 24px 48px -22px rgba(14,159,138,.45)}
+.rec-badge{position:absolute;top:-.8rem;right:1.2rem;background:var(--p);color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.04em;padding:.3rem .8rem;border-radius:999px;box-shadow:0 6px 16px -6px rgba(14,159,138,.7)}
+.pkg-notes{margin-top:1.8rem;display:grid;gap:.4rem;font-size:.92rem;color:var(--m);background:rgba(255,255,255,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.3rem}
+.pkg-notes p{margin:0}
+@media(min-width:760px){.pkg.rec{transform:translateY(-8px)}.js .pkg.rec.reveal.in{transform:translateY(-8px)}}
+section{scroll-margin-top:64px}
