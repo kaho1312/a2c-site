@@ -22,7 +22,7 @@ function play(panel){clear();var th=panel.querySelector('.sc-thread'),items=[].s
   if(sys)return wait(500).then(function(){if(cur!==token)return;it.classList.add('sc-show');toBottom(th)});
   var ty=typing(th,out?'out':'in');
   return wait(out?Math.min(650+n*9,1700):Math.min(700+n*14,1600)).then(function(){if(cur!==token)return;ty.remove();it.classList.add('sc-show');toBottom(th);return wait(out?650:450)})})});
- chain.then(function(){if(cur===token&&rp)rp.hidden=false})}
+ chain.then(function(){if(cur!==token)return;th.style.scrollBehavior='auto';toBottom(th);th.style.scrollBehavior='';if(rp)rp.hidden=false})}
 function select(i,focus){tabs.forEach(function(t,j){var on=i===j;t.setAttribute('aria-selected',on?'true':'false');t.tabIndex=on?0:-1;panels[j].hidden=!on});
  if(focus)tabs[i].focus({preventScroll:true});var tl=tabs[i].parentNode,t=tabs[i];if(t.offsetLeft<tl.scrollLeft||t.offsetLeft+t.offsetWidth>tl.scrollLeft+tl.clientWidth)tl.scrollLeft=t.offsetLeft-16;
  if(seen||rm)play(panels[i])}
