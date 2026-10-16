@@ -6,7 +6,7 @@ const fs = require('fs'), path = require('path'), { execSync } = require('child_
 const repo = path.resolve(__dirname, '../..'), out = '/workspace/a2c-showcase-dist';
 fs.rmSync(out, { recursive: true, force: true });
 for (const f of execSync('git ls-files -co --exclude-standard', { cwd: repo }).toString().split('\n').filter(Boolean)) {
-  if (/^(tools\/|CNAME$|\.nojekyll$)/.test(f)) continue;
+  if (/^(tools\/|CNAME$|\.nojekyll$|\.gitignore$)/.test(f)) continue;
   fs.mkdirSync(path.join(out, path.dirname(f)), { recursive: true }); fs.copyFileSync(path.join(repo, f), path.join(out, f));
 }
 fs.copyFileSync(path.join(__dirname, 'robots.txt'), path.join(out, 'robots.txt'));
