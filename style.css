@@ -114,3 +114,13 @@ footer{border-top:1px solid var(--line);color:var(--m);padding:2rem 0;font-size:
 .pkg-notes p{margin:0}
 @media(min-width:760px){.pkg.rec{transform:translateY(-8px)}.js .pkg.rec.reveal.in{transform:translateY(-8px)}}
 section{scroll-margin-top:64px}
+/* language + currency switchers */
+.langsw,.cursw{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.langsw button,.cursw button{border:0;background:transparent;color:var(--m);font:inherit;font-weight:700;font-size:.78rem;letter-spacing:.02em;padding:.32rem .7rem;border-radius:999px;cursor:pointer}
+.langsw button:hover,.cursw button:hover{color:var(--t)}
+.langsw button.on,.cursw button.on{background:var(--t);color:#fff}
+.langsw button:focus-visible,.cursw button:focus-visible{outline:2px solid var(--b);outline-offset:2px}
+.pk-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.8rem 1.5rem;margin-bottom:1.5rem}.pk-head h2{margin:0}
+.cursw button.on{background:var(--p)}
+.fx-note{font-size:.78rem;opacity:.85}
+.amt .tax{display:block;font-size:.82rem;font-weight:600;color:var(--m);letter-spacing:0;line-height:1.3;margin-top:.15rem}
