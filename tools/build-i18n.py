@@ -122,6 +122,8 @@ def translate(src, l):
         if hv is not None: new = set_attr(new, 'href', hv)
         lv = attr(tag, f'data-{l}-label')
         if lv is not None: new = set_attr(new, 'aria-label', lv)
+        pv = attr(tag, f'data-{l}-ph')
+        if pv is not None: new = set_attr(new, 'placeholder', pv)
         if re.search(r'\sdata-es(?=[\s>=])', tag):
             end = inner_end(src, name, m.end())
             inner = src[m.end():end]

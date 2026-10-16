@@ -1,0 +1,2 @@
+CREATE TABLE IF NOT EXISTS leads (id TEXT PRIMARY KEY, created_at TEXT NOT NULL, name TEXT, business TEXT, industry TEXT, email TEXT, whatsapp TEXT, city TEXT, pain TEXT, preferred_contact TEXT, consent_email INTEGER NOT NULL DEFAULT 0, consent_whatsapp INTEGER NOT NULL DEFAULT 0, consent_privacy INTEGER NOT NULL DEFAULT 0, consent_version TEXT, lang TEXT, page_url TEXT, user_agent TEXT, ip_hash TEXT, turnstile INTEGER NOT NULL DEFAULT 0);
+CREATE INDEX IF NOT EXISTS idx_leads_ip ON leads (ip_hash, created_at);
