@@ -11,7 +11,7 @@ python3 tools/build-showcase.py
 python3 tools/build-i18n.py
 rm -rf dist && mkdir dist
 git ls-files -co --exclude-standard \
-  | grep -Ev '^(tools/|\.github/|functions/|dist/|README\.md$|CNAME$|\.nojekyll$|\.gitignore$|wrangler\.(toml|json|jsonc)$)' \
+  | grep -Ev '^(tools/|\.github/|\.wrangler/|functions/|dist/|README\.md$|CNAME$|\.nojekyll$|\.gitignore$|wrangler\.(toml|json|jsonc)$)' \
   | while read -r f; do [ -f "$f" ] || continue; mkdir -p "dist/$(dirname "$f")"; cp "$f" "dist/$f"; done
 cp tools/prod/_headers dist/_headers
 python3 tools/check-production.py dist

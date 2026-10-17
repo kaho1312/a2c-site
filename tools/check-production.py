@@ -22,7 +22,7 @@ import os, re, sys, pathlib, subprocess
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 TEXT_EXT = {'.html', '.htm', '.js', '.json', '.txt', '.xml', '.css', '.svg', '.webmanifest', '.md'}
-SKIP = re.compile(r'^(tools/|functions/|dist/|CNAME$|\.nojekyll$|\.gitignore$|\.github/|README\.md$|wrangler\.(toml|json|jsonc)$)')
+SKIP = re.compile(r'^(tools/|functions/|dist/|\.wrangler/|CNAME$|\.nojekyll$|\.gitignore$|\.github/|README\.md$|wrangler\.(toml|json|jsonc)$)')
 
 # Removed claims (ES / EN / DE). Case-insensitive regexes, checked in every build target.
 BANNED = [
