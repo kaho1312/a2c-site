@@ -18,8 +18,8 @@ Production a2c.dev = GitHub Pages from `main` (CNAME). Nothing here touches it.
   - `DELETE /api/admin/lead?id=<id>`
   - Example: `curl -H "Authorization: Bearer $(cat /home/box/.secrets/a2c-leads-admin-key)" https://a2c-site-preview.pages.dev/api/admin/export.csv -o leads.csv`
 - No notifications are sent.
-- **Before production:** a2c.dev is on GitHub Pages, so `/api/lead` does not exist there. Either move a2c.dev to Cloudflare Pages
-  (same `_worker.js`/binding approach) or give the Worker its own custom domain and set `endpoint` in tools/leads.json.
+- **Before production:** a2c.dev is on GitHub Pages, so `/api/lead` does not exist there. The prepared route is a Cloudflare
+  Pages project with `functions/api/lead.js` (see "Host-aware `/api/lead` rule" below).
 
 ## Production gate: `tools/check-production.py` (merge-readiness, BUILD_TARGET)
 The preview intentionally ships two things that must never reach a2c.dev: robots.txt `Disallow: /` and a form that posts
@@ -33,8 +33,8 @@ to `/api/lead` (exists only behind the preview's `_worker.js`). The gate catches
   preview keeps building.
 - In every mode it fails if a claim removed after Agency QA (2026-10-17) comes back: hotel "best rate"/price match,
   "AI spots warning signs", gluten-free "prepared separately"/"all covered" (ES/EN/DE patterns in the script).
-- CI: `.github/workflows/production-check.yml` runs the build with `BUILD_TARGET=production` on PRs into `main` and pushes to `main`.
-  Note: GitHub Pages deploys from `main` regardless of the check result, so the check must be green before merging.
+- CI: `.github/workflows/production-check.yml` runs `tools/build-prod.sh` with `BUILD_TARGET=production PROD_HOST=cloudflare-pages`
+  on PRs into `main` and pushes to `main`. Note: GitHub Pages deploys from `main` regardless of the check result.
 
 ```
 # production build (export so both steps see it)
@@ -43,9 +43,16 @@ export BUILD_TARGET=production; python3 tools/build-showcase.py && python3 tools
 BUILD_TARGET=production python3 tools/check-production.py /workspace/a2c-showcase-dist   # fails: preview content
 python3 tools/check-production.py /workspace/a2c-showcase-dist                           # passes: preview mode
 ```
-To make the branch mergeable: drop `Disallow: /` (the repo's own robots.txt is already `Allow: /`; only the preview dist swaps it)
-and point the form at a production endpoint (`LEADS_ENDPOINT` / `tools/leads.json` `endpoint`, e.g. a custom domain for the
-`a2c-leads` Worker) or move a2c.dev to Cloudflare Pages.
+### Host-aware `/api/lead` rule (`PROD_HOST`, branch `cutover-prep`)
+- `PROD_HOST=github-pages` (default): any `/api/lead` reference fails a production build (GitHub Pages has no endpoint).
+- `PROD_HOST=cloudflare-pages`: `/api/lead` is allowed **only** when the Pages Function `functions/api/lead.js` exists
+  (repo root or next to the checked dir) and forwards to `env.LEADS` at `/lead`. Without it the references fail as above.
+  Robots Disallow-all and the removed-claim guard are unconditional.
+- Production build for Cloudflare Pages: `BUILD_TARGET=production PROD_HOST=cloudflare-pages bash tools/build-prod.sh`
+  → `dist/` (repo `robots.txt` = `Allow: /`, `tools/prod/_headers` with noindex for `*.pages.dev`), gate run on `dist/`.
+  The Function is compiled by Pages from `functions/`; the `LEADS` service binding comes from `wrangler.toml`.
+- Merging this into `main` is part of the cutover itself: while a2c.dev is still on GitHub Pages, `main` would publish a form
+  that posts to a non-existent `/api/lead`. See /workspace/agency/a2c-cutover-runbook.md.
 
 ## Demo content rules (Agency QA 2026-10-17)
 - Content: `tools/showcase_content.py` (chats) and `tools/form_content.py` (form). Each demo shows a privacy line

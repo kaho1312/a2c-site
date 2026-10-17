@@ -1,5 +1,6 @@
-# Merge-readiness gate: a2c.dev (GitHub Pages from main) must not ship the preview's robots Disallow-all
-# or any /api/lead reference. Runs tools/check-production.py with BUILD_TARGET=production.
+# Merge-readiness gate for a2c.dev on Cloudflare Pages: builds dist/ with tools/build-prod.sh and runs
+# tools/check-production.py with BUILD_TARGET=production PROD_HOST=cloudflare-pages (robots must allow indexing;
+# /api/lead only with functions/api/lead.js; removed claims never). Merge to main only as part of the DNS cutover.
 name: production-check
 on:
   pull_request:
@@ -16,8 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
       - name: Production build + gate
-        env: { BUILD_TARGET: production }
+        env: { BUILD_TARGET: production, PROD_HOST: cloudflare-pages }
         run: |
-          python3 tools/build-showcase.py
-          python3 tools/build-i18n.py
+          bash tools/build-prod.sh
           git diff --exit-code -- index.html en/index.html de/index.html || { echo "Built pages differ from committed pages: run the build and commit"; exit 1; }

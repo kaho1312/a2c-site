@@ -1,0 +1,11 @@
+# Production static headers for Cloudflare Pages (copied to dist/_headers by tools/build-prod.sh).
+# Not applied to Pages Function responses (functions/api/lead.js sets its own headers).
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

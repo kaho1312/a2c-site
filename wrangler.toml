@@ -1,0 +1,9 @@
+# Cloudflare Pages project config for a2c.dev (source of truth once the project deploys with it).
+# Not used by the a2c-site-preview project (that one is a direct upload from tools/preview/make-deploy-code.js).
+name = "a2c-site"
+pages_build_output_dir = "./dist"
+compatibility_date = "2026-10-01"
+
+[[services]]
+binding = "LEADS"
+service = "a2c-leads"
