@@ -35,7 +35,7 @@ UI = {
                 'Beispielgespräche mit fiktiven Unternehmen. Preise, Zeiten und Regeln in den Chats sind nur zur Veranschaulichung – Ihr Agent nutzt Ihre eigenen.'),
 }
 
-# EXAMPLE DATA of the fictional demo hotel ("Hotel Casa Brisa Demo"). Not a real business, not A2C policy.
+# EXAMPLE DATA of the fictional demo hotel ("Hotel Ceibo Lunar Demo"). Not a real business, not A2C policy.
 # The hotel chat may only cite direct-booking perks listed here (no "best rate" / price-match claims).
 HOTEL_EXAMPLE_DATA = {
  'direct_booking_perks': [
@@ -45,12 +45,24 @@ HOTEL_EXAMPLE_DATA = {
  ],
 }
 
+# Demo business names were checked by web search on 2026-10-16 (exact name + Cancún / Playa del Carmen / Tulum /
+# Quintana Roo / México + listing sites): no real business found. Re-check before adding or renaming any demo business.
+
+# Package brand names stay Spanish; EN/DE get a translated descriptor ONCE, at the package's first appearance in the page.
+# Recepcionista 24/7 first appears in the #productos price teaser (pricing.js 'recep'), so the showcase only adds
+# descriptors for the other two (dental panel = Reservas + Seguimiento, restaurant panel = Esencial).
+PKG_DESC = {
+ 'esencial': ('Essentials', 'Basis'),
+ 'reservas': ('Bookings + Follow-up', 'Buchungen + Nachbetreuung'),
+ 'recepcionista': ('24/7 Receptionist', 'Rezeption rund um die Uhr'),
+}
+
 SUBJ = {'es': 'Llamada gratis – A2C ({})', 'en': 'Free call – A2C ({})', 'de': 'Kostenloses Erstgespräch – A2C ({})'}
 
 CASES = [
 dict(id='dental', icon='🦷', pkg='reservas', pkg_name='Reservas + Seguimiento', kind='chat',
  tab=('Clínica dental', 'Dental clinic', 'Zahnarztpraxis'),
- biz=('Clínica Dental Arrecife Demo', 'Arrecife Dental Clinic Demo', 'Zahnarztpraxis Arrecife Demo'), privacy='clinic',
+ biz=('Clínica Dental Arenalba Demo', 'Arenalba Dental Clinic Demo', 'Zahnarztpraxis Arenalba Demo'), privacy='clinic',
  chip=('Domingo, 11:48 p.m. · clínica cerrada', 'Sunday, 11:48 PM · clinic closed', 'Sonntag, 23:48 · Praxis geschlossen'),
  hook=('Domingo, casi medianoche: se rompe una muela. ¿Quién contesta?', 'Sunday, nearly midnight: a tooth cracks. Who answers?', 'Sonntag, kurz vor Mitternacht: Ein Zahn bricht ab. Wer antwortet?'),
  pain=('El paciente con dolor no espera al lunes: le escribe a la clínica que conteste primero.',
@@ -98,16 +110,16 @@ dict(id='dental', icon='🦷', pkg='reservas', pkg_name='Reservas + Seguimiento'
 
 dict(id='plomero', icon='🔧', pkg='recepcionista', pkg_name='Recepcionista 24/7', kind='call',
  tab=('Plomero', 'Plumber', 'Sanitär-Notdienst'),
- biz=('Plomería Pronto Demo', 'Pronto Plumbing Demo', 'Sanitär Pronto Demo'),
+ biz=('Plomería Tubo Sereno Demo', 'Tubo Sereno Plumbing Demo', 'Sanitär Tubo Sereno Demo'),
  chip=('Sábado, 2:14 a.m. · llamada telefónica', 'Saturday, 2:14 AM · phone call', 'Samstag, 02:14 · Telefonanruf'),
  hook=('Son las 2 de la mañana y hay agua por todo el piso de la cocina.', 'It\'s 2 AM and there\'s water all over the kitchen floor.', 'Es ist 2 Uhr nachts, und in der Küche steht das Wasser.'),
  pain=('Quien llama a esa hora contrata al primero que contesta. Si nadie contesta, marca al siguiente de la lista.',
        'Whoever calls at that hour hires the first plumber who picks up. If you don\'t, the next one on the list will.',
        'Wer um diese Uhrzeit anruft, beauftragt den Ersten, der abhebt. Heben Sie nicht ab, ruft er den Nächsten an.'),
  msgs=[
- ('out','02:14','Plomería Pronto, buenas noches. Le atiende la recepcionista virtual, disponible las 24 horas. ¿En qué le ayudo?',
-  'Pronto Plumbing, you\'re speaking with our 24-hour virtual receptionist. How can I help?',
-  'Sanitär Pronto, Sie sprechen mit unserer virtuellen Rezeption, rund um die Uhr erreichbar. Wie kann ich helfen?'),
+ ('out','02:14','Plomería Tubo Sereno, buenas noches. Le atiende la recepcionista virtual, disponible las 24 horas. ¿En qué le ayudo?',
+  'Tubo Sereno Plumbing, you\'re speaking with our 24-hour virtual receptionist. How can I help?',
+  'Sanitär Tubo Sereno, Sie sprechen mit unserer virtuellen Rezeption, rund um die Uhr erreichbar. Wie kann ich helfen?'),
  ('in','02:14','¡Se reventó un tubo debajo del fregadero y está saliendo muchísima agua!', 'A pipe just burst under the kitchen sink, there\'s water everywhere!', 'Unter der Spüle ist ein Rohr geplatzt, hier läuft überall Wasser!'),
  ('out','02:14','Vamos a pararlo ya. Cierre la llave de paso: suele estar bajo el fregadero o junto al medidor de agua. Aquí le espero.',
   'Let\'s stop it right now. Turn off the shut-off valve: it\'s usually under the sink or next to the water meter. I\'ll stay on the line.',
@@ -146,7 +158,7 @@ dict(id='plomero', icon='🔧', pkg='recepcionista', pkg_name='Recepcionista 24/
 
 dict(id='tours', icon='🌴', pkg='reservas', pkg_name='Reservas + Seguimiento', kind='chat',
  tab=('Tours', 'Tour operator', 'Touranbieter'),
- biz=('Laguna Azul Tours Demo', 'Laguna Azul Tours Demo', 'Laguna Azul Tours Demo'),
+ biz=('Garza Lenta Tours Demo', 'Garza Lenta Tours Demo', 'Garza Lenta Tours Demo'),
  chip=('Martes, 10:36 p.m. · oficina cerrada', 'Tuesday, 10:36 PM · office closed', 'Dienstag, 22:36 · Büro geschlossen'),
  hook=('Eligen el tour de mañana a las 10 de la noche, desde la cama del hotel.', 'Travelers pick tomorrow\'s tour at 10 PM, from their hotel bed.', 'Den Ausflug für morgen buchen Urlauber um 22 Uhr – vom Hotelbett aus.'),
  pain=('Si tu oficina no contesta, reservan con quien sí lo hace, y los lugares de mañana se quedan vacíos.',
@@ -197,7 +209,7 @@ dict(id='tours', icon='🌴', pkg='reservas', pkg_name='Reservas + Seguimiento',
 
 dict(id='hotel', icon='🏨', pkg='reservas', pkg_name='Reservas + Seguimiento', kind='chat',
  tab=('Hotel', 'Hotel', 'Hotel'),
- biz=('Hotel Casa Brisa Demo', 'Hotel Casa Brisa Demo', 'Hotel Casa Brisa Demo'),
+ biz=('Hotel Ceibo Lunar Demo', 'Hotel Ceibo Lunar Demo', 'Hotel Ceibo Lunar Demo'),
  chip=('Jueves, 1:05 a.m. · reservaciones cerrado', 'Thursday, 1:05 AM · reservations desk closed', 'Donnerstag, 01:05 · Reservierung geschlossen'),
  hook=('A la 1 de la mañana están comparando tu hotel con el de enfrente.', 'At 1 AM they\'re comparing your hotel with the one across the street.', 'Um 1 Uhr nachts vergleichen sie Ihr Hotel mit dem gegenüber.'),
  pain=('Quien responde primero se queda con la reserva directa. Si no, se va a una plataforma y pagas comisión.',
@@ -247,7 +259,7 @@ dict(id='hotel', icon='🏨', pkg='reservas', pkg_name='Reservas + Seguimiento',
 
 dict(id='restaurante', icon='🍽️', pkg='esencial', pkg_name='Esencial', kind='chat',
  tab=('Restaurante', 'Restaurant', 'Restaurant'),
- biz=('Fogón del Puerto Demo', 'Fogón del Puerto Demo', 'Fogón del Puerto Demo'),
+ biz=('Brasa Turquí Demo', 'Brasa Turquí Demo', 'Brasa Turquí Demo'),
  chip=('Sábado, 11:20 p.m. · cocina cerrada', 'Saturday, 11:20 PM · kitchen closed', 'Samstag, 23:20 · Küche geschlossen'),
  hook=('Un grupo de 14 quiere celebrar mañana. Escriben cuando tu equipo ya se fue.', 'A party of 14 wants to celebrate tomorrow. They message after your team has gone home.', 'Eine Gruppe von 14 Personen will morgen feiern – und schreibt, als Ihr Team schon Feierabend hat.'),
  pain=('Mientras esperan respuesta, ya están preguntando en otros tres lugares.',

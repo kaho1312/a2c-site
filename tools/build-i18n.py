@@ -47,6 +47,12 @@ LD = {
         'Recepcionista 24/7': 'WhatsApp + KI-Telefonrezeption, inklusive 500 Sprachminuten.'},
 }
 
+# Package brand names stay Spanish in EN/DE; descriptor = same wording as PKG_DESC in tools/showcase_content.py
+PKG_ALT = {
+ 'en': {'Esencial': 'Essentials', 'Reservas + Seguimiento': 'Bookings + Follow-up', 'Recepcionista 24/7': '24/7 Receptionist'},
+ 'de': {'Esencial': 'Basis', 'Reservas + Seguimiento': 'Buchungen + Nachbetreuung', 'Recepcionista 24/7': 'Rezeption rund um die Uhr'},
+}
+
 # JSON-LD offer / service names that are descriptive (not package brand names) get translated too
 LD_NAMES = {
  'en': {'Llamada inicial': 'Initial call', 'Primera llamada gratis': 'Free first call',
@@ -175,6 +181,10 @@ def page(src, l):
             d['url'] = BASE + URL[l]; d['description'] = LD[l]['_']
             for o in d.get('makesOffer', []):
                 if o.get('name') in LD[l] and 'description' in o: o['description'] = LD[l][o['name']]
+                if o.get('name') in PKG_ALT[l]:  # brand name stays Spanish; translated descriptor as alternateName + description
+                    alt = PKG_ALT[l][o['name']]; o['alternateName'] = alt
+                    o['description'] = f'{alt} – ' + o.get('description', '')
+                    if isinstance(o.get('itemOffered'), dict): o['itemOffered']['alternateName'] = alt
                 if o.get('name') in LD_NAMES[l]: o['name'] = LD_NAMES[l][o['name']]
                 it = o.get('itemOffered') or {}
                 if it.get('name') in LD_NAMES[l]: it['name'] = LD_NAMES[l][it['name']]

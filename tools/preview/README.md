@@ -55,3 +55,8 @@ and point the form at a production endpoint (`LEADS_ENDPOINT` / `tools/leads.jso
 - Allergy/celiac questions: the bot shares only what the menu states and hands off to staff (no safety promises).
 - Dental: urgent messages are flagged to the team; no claim that the AI detects warning signs; no symptom triage questions.
 - Lead form: no health/sensitive data; the free-text field carries a hint saying so.
+- Demo business names (Clínica Dental Arenalba, Plomería Tubo Sereno, Garza Lenta Tours, Hotel Ceibo Lunar, Brasa Turquí,
+  all with "Demo") were web-checked on 2026-10-16 against Cancún / Playa del Carmen / Tulum / Quintana Roo / México and
+  listing sites; no real business found. Re-check before adding or renaming a demo business.
+- Package names stay Spanish (brand). EN/DE add a translated descriptor once, at first appearance (`PKG_DESC` in
+  showcase_content.py, `recep` teaser in pricing.js); JSON-LD offers carry it as `alternateName` + description prefix (`PKG_ALT`).

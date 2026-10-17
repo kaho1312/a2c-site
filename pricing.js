@@ -14,11 +14,11 @@ from:'Desde {p}/mes {tax}',recep:'Recepcionista 24/7: {p}/mes {tax}',sw:'Moneda'
 en:{mo:'/month',setup:'one-time setup',taxM:'+ IVA',taxO:'plus applicable taxes',min:'Extra minutes: approx. {p}/min',
 meta:'<strong>Meta fees:</strong> WhatsApp message fees charged by Meta are billed to you at cost (approx. {p}/month for a typical business; depends on volume).',
 diag:'<strong>Your first call is free.</strong> Want to go deeper? Our in-depth diagnosis with a written report costs {p} {tax}.',
-from:'From {p}/month {tax}',recep:'Recepcionista 24/7: {p}/month {tax}',sw:'Currency'},
+from:'From {p}/month {tax}',recep:'Recepcionista 24/7 (24/7 Receptionist): {p}/month {tax}',sw:'Currency'},
 de:{mo:'/Monat',setup:'einmalige Einrichtung',taxM:'zzgl. IVA',taxO:'zzgl. MwSt./Steuern',min:'Zusatzminute: ca. {p}',
 meta:'<strong>Meta-Gebühren:</strong> Die WhatsApp-Nachrichtengebühren von Meta werden Ihnen zum Selbstkostenpreis weiterberechnet (ca. {p}/Monat bei einem typischen Unternehmen; abhängig vom Volumen).',
 diag:'<strong>Das Erstgespräch ist kostenlos.</strong> Sie möchten tiefer einsteigen? Unsere ausführliche Diagnose mit schriftlichem Bericht kostet {p} {tax}.',
-from:'Ab {p}/Monat {tax}',recep:'Recepcionista 24/7: {p}/Monat {tax}',sw:'Währung'}};
+from:'Ab {p}/Monat {tax}',recep:'Recepcionista 24/7 (Rezeption rund um die Uhr): {p}/Monat {tax}',sw:'Währung'}};
 function num(l,v){return new Intl.NumberFormat(LOC[l],{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}).format(v)}
 function sym(c){return c==='EUR'?'€':c}
 function money(l,c,v){return l==='de'?num(l,v)+'\u00a0'+sym(c):c+' '+num(l,v)}
