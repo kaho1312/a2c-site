@@ -58,5 +58,5 @@ and point the form at a production endpoint (`LEADS_ENDPOINT` / `tools/leads.jso
 - Demo business names (Clínica Dental Arenalba, Plomería Tubo Sereno, Garza Lenta Tours, Hotel Ceibo Lunar, Brasa Turquí,
   all with "Demo") were web-checked on 2026-10-16 against Cancún / Playa del Carmen / Tulum / Quintana Roo / México and
   listing sites; no real business found. Re-check before adding or renaming a demo business.
-- Package names stay Spanish (brand). EN/DE add a translated descriptor once, at first appearance (`PKG_DESC` in
-  showcase_content.py, `recep` teaser in pricing.js); JSON-LD offers carry it as `alternateName` + description prefix (`PKG_ALT`).
+- Package names stay Spanish (brand). EN/DE show a translated descriptor on the three package-section headings only
+  (`PKG_DESC` in showcase_content.py, injected by build-showcase.py); JSON-LD offers carry it as `alternateName` + description prefix (`PKG_ALT`).

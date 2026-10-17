@@ -48,9 +48,7 @@ HOTEL_EXAMPLE_DATA = {
 # Demo business names were checked by web search on 2026-10-16 (exact name + Cancún / Playa del Carmen / Tulum /
 # Quintana Roo / México + listing sites): no real business found. Re-check before adding or renaming any demo business.
 
-# Package brand names stay Spanish; EN/DE get a translated descriptor ONCE, at the package's first appearance in the page.
-# Recepcionista 24/7 first appears in the #productos price teaser (pricing.js 'recep'), so the showcase only adds
-# descriptors for the other two (dental panel = Reservas + Seguimiento, restaurant panel = Esencial).
+# Package brand names stay Spanish; EN/DE show a translated descriptor on the package-section (#paquetes) headings only.
 PKG_DESC = {
  'esencial': ('Essentials', 'Basis'),
  'reservas': ('Bookings + Follow-up', 'Buchungen + Nachbetreuung'),

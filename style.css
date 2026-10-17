@@ -189,3 +189,5 @@ section{scroll-margin-top:64px}
 .lf-msg{margin:0;font-weight:600;padding:.7rem .9rem;border-radius:12px}.lf-msg.ok{background:#e8f7f2;color:var(--pd)}.lf-msg.bad{background:#fef2f2;color:#b91c1c}
 @media(min-width:760px){.lf-grid{grid-template-columns:1fr 1fr}.lf-pain{grid-column:1/-1}}
 #cuentanos{background:rgba(255,255,255,.6);border-block:1px solid var(--line)}
+
+.pkg-desc{font-weight:500;color:var(--m);font-size:.72em;white-space:nowrap}
