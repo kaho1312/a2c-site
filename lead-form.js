@@ -7,12 +7,14 @@ var ep=f.getAttribute('data-endpoint');var S={};f.querySelectorAll('template.lf-
 var msg=f.querySelector('.lf-msg'),btn=f.querySelector('.lf-submit'),ts=f.querySelector('.cf-turnstile');
 f.elements.lang.value=d.documentElement.lang||'es';
 if(ts&&'IntersectionObserver' in window){var io=new IntersectionObserver(function(es){if(es.some(function(e){return e.isIntersecting})){io.disconnect();var s=d.createElement('script');s.src='https://challenges.cloudflare.com/turnstile/v0/api.js';s.async=true;s.defer=true;d.head.appendChild(s)}},{rootMargin:'600px'});io.observe(f)}
+function okPhone(v){return /^\+?[0-9 ()-]{8,20}$/.test(v)&&v.replace(/\D/g,'').length>=8}
+function okField(n,v){return !!v&&(n!=='email'||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v))}
 function show(t,ok){msg.hidden=false;msg.textContent=t;msg.className='lf-msg '+(ok?'ok':'bad')}
 function bad(el,on){var w=el.closest('.lf-f,.lf-check');if(w)w.classList.toggle('lf-bad',on);el.setAttribute('aria-invalid',on?'true':'false')}
 f.addEventListener('submit',function(e){e.preventDefault();
- var E=f.elements,errs=0;['name','business','industry','email','city'].forEach(function(n){var el=E[n],v=(el.value||'').trim(),b=!v||(n==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));bad(el,b);if(b)errs++});
+ var E=f.elements,errs=0;['name','business','industry','email','city'].forEach(function(n){var el=E[n],v=(el.value||'').trim(),b=!okField(n,v);bad(el,b);if(b)errs++});
  bad(E.consent_privacy,!E.consent_privacy.checked);if(!E.consent_privacy.checked)errs++;
- var pref=(f.querySelector('input[name=preferred_contact]:checked')||{}).value||'email',wa=(E.whatsapp.value||'').trim(),waOk=/^\+?[0-9 ()-]{8,20}$/.test(wa);
+ var pref=(f.querySelector('input[name=preferred_contact]:checked')||{}).value||'email',wa=(E.whatsapp.value||'').trim(),waOk=okPhone(wa);
  if(errs){show(S.err_req);var first=f.querySelector('[aria-invalid=true]');if(first)first.focus();return}
  if(pref==='whatsapp'&&(!waOk||!E.consent_whatsapp.checked)){bad(E.whatsapp,!waOk);bad(E.consent_whatsapp,!E.consent_whatsapp.checked);show(S.err_wa);return}
  if(pref==='call'&&!waOk){bad(E.whatsapp,true);show(S.err_call);E.whatsapp.focus();return}
@@ -25,5 +27,8 @@ f.addEventListener('submit',function(e){e.preventDefault();
   if(x.s===200&&x.j.ok){f.reset();E.lang.value=d.documentElement.lang||'es';show(S.ok,true);if(window.turnstile)try{turnstile.reset()}catch(_){}}
   else{show(x.s===429?S.err_rate:S.err);if(window.turnstile)try{turnstile.reset()}catch(_){}}
  }).catch(function(){show(S.err)}).then(function(){btn.disabled=false})});
+// inline check on blur: flags a filled-in field that is invalid (email format, phone digits) without waiting for submit
+f.addEventListener('focusout',function(e){var el=e.target,n=el.name,v=(el.value||'').trim();if(!v)return;
+ if(n==='email')bad(el,!okField(n,v));else if(n==='whatsapp')bad(el,!okPhone(v))});
 f.addEventListener('input',function(e){if(e.target.getAttribute('aria-invalid')==='true')bad(e.target,false)});
 })})();

@@ -156,6 +156,7 @@ section{scroll-margin-top:64px}
 .sc-typing span{width:6px;height:6px;border-radius:50%;background:#6b8f7a;animation:dot 1s infinite}.sc-typing span:nth-child(2){animation-delay:.15s}.sc-typing span:nth-child(3){animation-delay:.3s}
 .sc-play .sc-i:not(.sc-show){display:none}.sc-play .sc-i.sc-show{animation:pop .4s cubic-bezier(.2,.8,.2,1.2) both}
 .sc-label{text-align:center;font-size:.76rem;color:var(--m);margin:.9rem 0 0}
+.sc-privacy{text-align:center;font-size:.72rem;line-height:1.4;color:var(--m);margin:.35rem auto 0;max-width:30rem}
 .sc-replay{display:block;margin:.5rem auto 0;border:1px solid var(--line);background:#fff;color:var(--t);font:inherit;font-size:.82rem;font-weight:650;padding:.4rem .9rem;border-radius:999px;cursor:pointer}.sc-replay[hidden]{display:none}
 /* phone-call variant */
 .sc-calltop{background:linear-gradient(135deg,#6d4ad8,var(--v))}.sc-live{margin-left:auto;color:#fca5a5;font-size:.8rem;animation:pulse 1.6s infinite}

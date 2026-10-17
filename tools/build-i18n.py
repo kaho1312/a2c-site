@@ -47,6 +47,14 @@ LD = {
         'Recepcionista 24/7': 'WhatsApp + KI-Telefonrezeption, inklusive 500 Sprachminuten.'},
 }
 
+# JSON-LD offer / service names that are descriptive (not package brand names) get translated too
+LD_NAMES = {
+ 'en': {'Llamada inicial': 'Initial call', 'Primera llamada gratis': 'Free first call',
+        'Diagnóstico detallado': 'Detailed diagnosis', 'Diagnóstico con reporte escrito': 'Diagnosis with a written report'},
+ 'de': {'Llamada inicial': 'Erstgespräch', 'Primera llamada gratis': 'Kostenloses Erstgespräch',
+        'Diagnóstico detallado': 'Detaillierte Diagnose', 'Diagnóstico con reporte escrito': 'Diagnose mit schriftlichem Bericht'},
+}
+
 def esc(v):
     return html.escape(v, quote=True)
 
@@ -147,6 +155,8 @@ def translate(src, l):
 def page(src, l):
     s = set_seo(src, l)
     s = s.replace('<html lang="es"', f'<html lang="{l}"', 1)
+    # lead form: no-JS submissions carry the page language
+    s = s.replace('<input type="hidden" name="lang" value="es">', f'<input type="hidden" name="lang" value="{l}">')
     # language switcher: mark current page
     def sw(m):
         t = m.group(0)
@@ -165,6 +175,9 @@ def page(src, l):
             d['url'] = BASE + URL[l]; d['description'] = LD[l]['_']
             for o in d.get('makesOffer', []):
                 if o.get('name') in LD[l] and 'description' in o: o['description'] = LD[l][o['name']]
+                if o.get('name') in LD_NAMES[l]: o['name'] = LD_NAMES[l][o['name']]
+                it = o.get('itemOffered') or {}
+                if it.get('name') in LD_NAMES[l]: it['name'] = LD_NAMES[l][it['name']]
             return '<script type="application/ld+json">\n' + json.dumps(d, ensure_ascii=False, separators=(',', ':')) + '\n</script>'
         s = re.sub(r'<script type="application/ld\+json">\s*(.*?)\s*</script>', ld, s, count=1, flags=re.S)
     return s
@@ -177,6 +190,11 @@ def main():
         d = ROOT / l; d.mkdir(exist_ok=True)
         (d / 'index.html').write_text(page(es, l), encoding='utf-8')
     print('built: /, /en/, /de/')
+    # Production gate (BUILD_TARGET=production): fails on robots Disallow-all or /api/lead references. See README.
+    import subprocess as sp, sys, os
+    sys.stdout.flush()
+    r = sp.run([sys.executable, str(ROOT / 'tools' / 'check-production.py'), str(ROOT)])
+    if r.returncode: sys.exit(r.returncode)
 
 if __name__ == '__main__':
     main()

@@ -57,6 +57,8 @@ def case_html(c, first):
             out.append(f'<div class="sc-i sc-sys">🔔 {T("span", tr)}</div>')
     out.append('</div></div>')
     out.append(T('p', lab, 'class="sc-label"'))
+    pv = UI['privacy_clinic'] if c.get('privacy') == 'clinic' else (UI['privacy_call'] if call else UI['privacy'])
+    out.append(T('p', pv, 'class="sc-privacy"'))
     out.append('<button type="button" class="sc-replay" hidden>' + T('span', UI['replay']) + '</button></div>')
     lis = ''.join(T('li', o) for o in c['outcomes'])
     href = {l: mailto(l, c['tab'][i].lower() if l != 'de' else c['tab'][i]) for i, l in enumerate(L)}
@@ -96,7 +98,7 @@ def leadform():
       + field('email', F['email'], '<input id="lf-email" name="email" type="email" autocomplete="email" required maxlength="200">')
       + field('whatsapp', F['wa'], f'<input id="lf-whatsapp" name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" aria-describedby="lf-wa-hint">' + T('small', F['wa_hint'], 'id="lf-wa-hint" class="lf-hint"'))
       + field('city', F['city'], '<input id="lf-city" name="city" type="text" autocomplete="address-level2" required maxlength="120">')
-      + field('pain', F['pain'], f'<textarea id="lf-pain" name="pain" rows="3" maxlength="500" {ph(F["pain_ph"])}></textarea>')
+      + field('pain', F['pain'], f'<textarea id="lf-pain" name="pain" rows="3" maxlength="500" aria-describedby="lf-pain-hint" {ph(F["pain_ph"])}></textarea>' + T('small', F['pain_hint'], 'id="lf-pain-hint" class="lf-hint"'))
       + '</div>'
       f'<fieldset class="lf-pref"><legend>{T("span", F["pref"])}</legend>{pref}</fieldset>'
       '<fieldset class="lf-consent">'

@@ -1,0 +1,23 @@
+# Merge-readiness gate: a2c.dev (GitHub Pages from main) must not ship the preview's robots Disallow-all
+# or any /api/lead reference. Runs tools/check-production.py with BUILD_TARGET=production.
+name: production-check
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Production build + gate
+        env: { BUILD_TARGET: production }
+        run: |
+          python3 tools/build-showcase.py
+          python3 tools/build-i18n.py
+          git diff --exit-code -- index.html en/index.html de/index.html || { echo "Built pages differ from committed pages: run the build and commit"; exit 1; }

@@ -3,13 +3,21 @@
 // Never targets production (a2c.dev is served by GitHub Pages from main).
 // Usage: node tools/preview/make-deploy-code.js, then run the printed file through the Cloudflare API execute tool.
 const fs = require('fs'), path = require('path'), { execSync } = require('child_process');
+if ((process.env.BUILD_TARGET || '').toLowerCase() === 'production') { console.error('make-deploy-code.js is preview-only; refusing BUILD_TARGET=production'); process.exit(1); }
 const repo = path.resolve(__dirname, '../..'), out = '/workspace/a2c-showcase-dist';
 fs.rmSync(out, { recursive: true, force: true });
 for (const f of execSync('git ls-files -co --exclude-standard', { cwd: repo }).toString().split('\n').filter(Boolean)) {
-  if (/^(tools\/|CNAME$|\.nojekyll$|\.gitignore$)/.test(f)) continue;
+  if (/^(tools\/|\.github\/|README\.md$|CNAME$|\.nojekyll$|\.gitignore$)/.test(f)) continue;
   fs.mkdirSync(path.join(out, path.dirname(f)), { recursive: true }); fs.copyFileSync(path.join(repo, f), path.join(out, f));
 }
 fs.copyFileSync(path.join(__dirname, 'robots.txt'), path.join(out, 'robots.txt'));
+// noindex also as <meta name="robots"> on every preview HTML page (header X-Robots-Tag + robots.txt stay as well)
+(function walkHtml(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f);
+  if (fs.statSync(p).isDirectory()) { walkHtml(p); continue; }
+  if (!p.endsWith('.html')) continue; let h = fs.readFileSync(p, 'utf8');
+  if (!/<meta name="robots"/i.test(h)) { h = h.replace(/<head>/i, '<head>\n<meta name="robots" content="noindex, nofollow">'); fs.writeFileSync(p, h); } } })(out);
+// preview-mode gate run: production-only issues are reported, removed-claim hits fail the deploy build
+execSync('python3 ' + JSON.stringify(path.join(repo, 'tools/check-production.py')) + ' ' + JSON.stringify(out), { stdio: 'inherit', env: { ...process.env, BUILD_TARGET: 'preview' } });
 const CT = { html: 'text/html; charset=utf-8', css: 'text/css; charset=utf-8', js: 'application/javascript; charset=utf-8', svg: 'image/svg+xml', txt: 'text/plain; charset=utf-8', xml: 'application/xml; charset=utf-8' };
 const files = []; (function walk(d) { for (const f of fs.readdirSync(d)) { const p = path.join(d, f); fs.statSync(p).isDirectory() ? walk(p) : files.push(p); } })(out);
 // Static files are embedded in the preview's _worker.js (the API sandbox cannot use the asset-upload token flow).
